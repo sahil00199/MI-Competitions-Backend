@@ -44,3 +44,6 @@ class UserProfile(models.Model):
 
     def set_mi_number(self, no):
         self.mi_number=no
+
+    class Meta:
+        ordering = ('name',)

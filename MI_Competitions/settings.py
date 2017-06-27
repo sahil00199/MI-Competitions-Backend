@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'participant_api.apps.ParticipantApiConfig',
     'informals.apps.InformalsConfig',
+    'competitions.apps.CompetitionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

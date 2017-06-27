@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('participant_api.urls')),
     url(r'^', include('informals.urls')),
+    url(r'^', include('competitions.urls')),
 ]
