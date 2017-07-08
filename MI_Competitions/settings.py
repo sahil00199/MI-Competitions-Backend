@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'informals.apps.InformalsConfig',
     'competitions.apps.CompetitionsConfig',
     'proshows.apps.ProshowsConfig',
+    'workshops.apps.WorkshopsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
