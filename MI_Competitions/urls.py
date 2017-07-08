@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^', include('competitions.urls')),
     url(r'^', include('proshows.urls')),
     url(r'^', include('workshops.urls')),
+    url(r'^', include('pronites.urls')),
 ]
