@@ -11,7 +11,7 @@ class Informal1(APIView): #return description of entire INFORMALS
     def get(self, request, format=None):
         serializer = InformalSerializer(Informal.objects.get(pk=1))
         #serializer += InformalsGenreSerializer(InformalsGenre.objects.all(), many = True)
-        serializer.data["asdfg"] = "asdf"
+        #serializer.data["asdfg"] = "asdf"
         return Response(serializer.data)
 
 class InformalsGenreList(APIView): #return all the genres under INFORMALS and create a new genre

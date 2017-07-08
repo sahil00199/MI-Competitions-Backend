@@ -11,7 +11,7 @@ class Proshow1(APIView): #return description of entire ProshowS
     def get(self, request, format=None):
         serializer = ProshowSerializer(Proshow.objects.get(pk=1))
         #serializer += ProshowsGenreSerializer(ProshowsGenre.objects.all(), many = True)
-        serializer.data["asdfg"] = "asdf"
+        #serializer.data["asdfg"] = "asdf"
         return Response(serializer.data)
 
 class ProshowsGenreList(APIView): #return all the genres under ProshowS and create a new genre
