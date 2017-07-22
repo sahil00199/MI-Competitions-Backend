@@ -1,0 +1,11 @@
+{% load i18n %}
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+<FORM>
+<SELECT id="filter-{{ title }}">
+{% for choice in choices %}
+<OPTION {% if choice.selected %} selected{% endif %}
+value="{{ choice.query_string|iriencode }}">{{ choice.display }}</OPTION>
+{% endfor %}
+</SELECT>
+<INPUT type="button" name="go" value="Go"
+onClick="window.location=document.getElementById('filter-{{ title}}').options[document.getElementById('filter-{{ title }}').selectedIndex].value"></FORM>
