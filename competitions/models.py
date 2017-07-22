@@ -19,6 +19,7 @@ class IndividualEvent(models.Model):
     prizes = models.TextField()
     multicity_details = models.TextField()
     participants = models.ManyToManyField(UserProfile, blank=True)
+    team_id = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -44,3 +45,8 @@ class GroupEvent(models.Model):
 
     def __str__(self):
         return self.name
+
+    def delete(self, using=None):
+        if self.participants:
+            self.participants.delete()
+        super(GroupEvent, self).delete(using)
