@@ -11,10 +11,19 @@ class IndividualCompetition(APIView): #add participant to an individual competit
     def post(self, request, event_id, format = None):
         participant = request.data['participant']
         event = IndividualEvent.objects.get(pk=event_id)
-        user = UserProfile.objects.get(mi_number=participant)
-        event.participants.add(user)
+        obj= Group.objects.latest('id')
+        name = participant[0]
+        
+        group = Group.objects.create(event=event, team_id=obj.team_id+1, name=name)
+        
+        for user in participant:
+            event.participants.add(UserProfile.objects.get(mi_number=user))
+            group.members.add(UserProfile.objects.get(mi_number=user))
+            event.groups_part.add(group)
         serializer = IndividualEventSerializer(event)
+        
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     def get(self, request, event_id, format = None):
         serializer = IndividualEventSerializer(IndividualEvent.objects.get(pk = event_id))
         return Response(serializer.data)
