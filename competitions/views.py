@@ -96,3 +96,8 @@ class GenreInfo(APIView): #return info about a particular genre
     def get(self, request, genre_id, format = None):
         serializer = GenreSerializer(Genre.objects.get(pk = genre_id))
         return Response(serializer.data)
+
+class AllEvents(APIView):
+    def get(self, request, format=None):
+        serializer = IndividualEventSerializer(IndividualEvent.objects.all(), many = True)
+        return Response(serializer.data)

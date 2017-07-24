@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^informals/genre/(?P<genre_id>[0-9]+)/$', views.InformalsGenre1.as_view()), #info on one genre
     url(r'^informals/event/(?P<event_id>[0-9]+)/$', views.InformalsEvent1.as_view()),#info on one event
     url(r'^informals/events/(?P<genre_id>[0-9]+)/$', views.InformalsEventList.as_view()),#all events under a genre
+    url(r'^informals/events/all/', views.InformalsEventAll.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

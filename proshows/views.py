@@ -44,3 +44,9 @@ class ProshowsEvent1(APIView): #return info about a particular event
         event = ProshowsEvent.objects.get(pk = event_id)
         serializer = ProshowsEventSerializer(event)
         return Response(serializer.data)
+
+class ProshowsEventAll(APIView):
+    def get(self, request, format=None):
+        serializer = ProshowsEventSerializer(ProshowsEvent.objects.all(), many=True)
+        return Response(serializer.data)
+
