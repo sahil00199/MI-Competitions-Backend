@@ -30,6 +30,8 @@ urlpatterns=[
 
     url(r'^competitions/genre/info/(?P<genre_id>[0-9]+)/$', views.GenreInfo.as_view()),
     #return the information about a particular genre
+
+    url(r'^competitions/events/all/', views.AllEvents.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

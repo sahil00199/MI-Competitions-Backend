@@ -25,3 +25,4 @@ class GroupEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupEvent
         fields = ('name', 'genre', 'about', 'rules', 'prizes', 'multicity_details',)
+

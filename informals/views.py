@@ -44,3 +44,8 @@ class InformalsEvent1(APIView): #return info about a particular event
         event = InformalsEvent.objects.get(pk = event_id)
         serializer = InformalsEventSerializer(event)
         return Response(serializer.data)
+
+class InformalsEventAll(APIView):
+    def get(self, request, format=None):
+        serializer = InformalsEventSerializer(InformalsEvent.objects.all(), many=True)
+        return Response(serializer.data)

@@ -11,10 +11,24 @@ class IndividualCompetition(APIView): #add participant to an individual competit
     def post(self, request, event_id, format = None):
         participant = request.data['participant']
         event = IndividualEvent.objects.get(pk=event_id)
-        user = UserProfile.objects.get(mi_number=participant)
-        event.participants.add(user)
+        obj= Group.objects.latest('id')
+        try:
+            group_leader = UserProfile.objects.get(mi_number=participant[0])
+            group = Group.objects.create(event=event, team_id=obj.team_id+1, name=group_leader.mi_number)
+        except:
+            return Response({"details":"MI Number invalid"}, status = status.HTTP_400_BAD_REQUEST)
+        
+        for user in participant:
+            try:
+                event.participants.add(UserProfile.objects.get(mi_number=user))
+                group.members.add(UserProfile.objects.get(mi_number=user))
+            except:
+                return Response({"details":"MI Number invalid"}, status = status.HTTP_400_BAD_REQUEST)
+            event.groups_part.add(group)
         serializer = IndividualEventSerializer(event)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        group_serializer = GroupSerializer(group)
+        return Response({"details":"success", "default":group_serializer.data}, status=status.HTTP_201_CREATED)
+    
     def get(self, request, event_id, format = None):
         serializer = IndividualEventSerializer(IndividualEvent.objects.get(pk = event_id))
         return Response(serializer.data)
@@ -86,4 +100,9 @@ class GroupEventsUnderGenre(APIView): #return all group events under a genre
 class GenreInfo(APIView): #return info about a particular genre
     def get(self, request, genre_id, format = None):
         serializer = GenreSerializer(Genre.objects.get(pk = genre_id))
+        return Response(serializer.data)
+
+class AllEvents(APIView):
+    def get(self, request, format=None):
+        serializer = IndividualEventSerializer(IndividualEvent.objects.all(), many = True)
         return Response(serializer.data)

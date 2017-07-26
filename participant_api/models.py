@@ -29,7 +29,7 @@ class UserProfile(models.Model):
     YEAR_CHOICES = [(c, c) for c in YEAR]
 
     name = models.CharField(max_length=50)
-    mi_number = models.CharField(max_length=10, unique=True, default='default')
+    mi_number = models.CharField(max_length=11, unique=True, default='default')
     email = models.EmailField(max_length=70, unique=True, blank=False)
     present_city = models.ForeignKey(City, on_delete=models.CASCADE)
     present_college = models.ForeignKey(College, on_delete=models.CASCADE)
@@ -44,6 +44,8 @@ class UserProfile(models.Model):
 
     def set_mi_number(self, no):
         self.mi_number=no
+    def getName():
+        return name
 
     class Meta:
         ordering = ('name',)
