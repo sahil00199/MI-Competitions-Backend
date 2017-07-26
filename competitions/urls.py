@@ -7,7 +7,7 @@ urlpatterns=[
     #return event info(get request), or add participants(post request with attribute participant
     #having mi number as string)
 
-    url(r'^individual/user/(?P<mi_number>MI-[A-Z]{3}-[0-9]+)/$', views.IndividualEventsForUser.as_view()),
+    url(r'^individual/user/(?P<fb_id>[0-9]+)/$', views.IndividualEventsForUser.as_view()),
     #return all individual events for user with given mi number registered for
 
     url(r'^group/competition/(?P<event_id>[0-9]+)/$', views.GroupCompetition.as_view()),
@@ -15,7 +15,7 @@ urlpatterns=[
     #name of group and participants-list of mi numbers of those participating)
     #eg: participants='[MI-BIG-101,MI-HOT-123,MI-ASS-234]' name="Swaggy Dancers"
 
-    url(r'^group/user/(?P<mi_number>MI-[A-Z]{3}-[0-9]+)/$', views.GroupEventsForUser.as_view()),
+    url(r'^group/user/(?P<fb_id>[0-9]+)/$', views.GroupEventsForUser.as_view()),
     #return all group events for user with given mi number
 
     url(r'^competitions/$', views.GeneralInfo.as_view()),#general competitions description

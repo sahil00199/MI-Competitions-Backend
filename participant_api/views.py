@@ -10,21 +10,21 @@ from rest_framework import status
 
 
 class ParticipantDetail(APIView):
-    def get_object(self, mi_number):
+    def get_object(self, fb_id):
         try:
-            return UserProfile.objects.get(mi_number=mi_number)
+            return UserProfile.objects.get(fb_id=fb_id)
         except UserProfile.DoesNotExist:
             raise Http404
 
 
-    def get(self, request, mi_number, format=None):
-        participant = self.get_object(mi_number)
+    def get(self, request, fb_id, format=None):
+        participant = self.get_object(fb_id)
         serializer = UserSerializer(participant)
         return Response(serializer.data)
 
 
-    def put(self, request, mi_number, format=None):
-        participant = self.get_object(mi_number)
+    def put(self, request, fb_id, format=None):
+        participant = self.get_object(fb_id)
         serializer = UserSerializer(participant, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -33,8 +33,8 @@ class ParticipantDetail(APIView):
 
 
 
-    def delete(self, request, mi_number, format=None):
-        snippet = self.get_object(mi_number)
+    def delete(self, request, fb_id, format=None):
+        snippet = self.get_object(fb_id)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

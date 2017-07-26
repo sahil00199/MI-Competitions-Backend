@@ -38,6 +38,7 @@ class UserProfile(models.Model):
     postal_address = models.CharField(max_length=100)
     zip_code = models.IntegerField()
     year_of_study = models.CharField(max_length=7, choices=YEAR_CHOICES)
+    fb_id = models.IntegerField()
 
     def __str__(self):
         return self.name

@@ -33,10 +33,10 @@ class IndividualCompetition(APIView): #add participant to an individual competit
         serializer = IndividualEventSerializer(IndividualEvent.objects.get(pk = event_id))
         return Response(serializer.data)
 
-class IndividualEventsForUser(APIView): #given mi_number, find all individual competitions registered for
-    def get(self, request, mi_number, format = None):
+class IndividualEventsForUser(APIView): #given fb_id, find all individual competitions registered for
+    def get(self, request, fb_id, format = None):
         try:
-            user = UserProfile.objects.get(mi_number = mi_number)
+            user = UserProfile.objects.get(fb_id = fb_id)
             events = user.individualevent_set.all()
             serializer = IndividualEventSerializer(events, many = True)
             return Response(serializer.data)
@@ -66,15 +66,15 @@ class GroupCompetition(APIView): #add a group of participants to a group competi
         return Response(serializer.data )
 
 class GroupEventsForUser(APIView):
-    def get(self, request, mi_number, format = None):
+    def get(self, request, fb_id, format = None):
         try:
-            user = UserProfile.objects.get(mi_number = mi_number)
+            user = UserProfile.objects.get(fb_id = fb_id)
             groups = user.group_set.all()
             events = GroupEvent.objects.filter(participants__in = groups)
             serializer = GroupEventSerializer(events, many = True)
             return Response(serializer.data)
         except:
-            return Response({}, status = status/HTTP_400_BAD_REQUEST)
+            return Response({}, status = status.HTTP_400_BAD_REQUEST)
 
 class GeneralInfo(APIView): #return general info about competitions
     def get(self, request, format = None):
