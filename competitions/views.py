@@ -12,17 +12,22 @@ class IndividualCompetition(APIView): #add participant to an individual competit
         participant = request.data['participant']
         event = IndividualEvent.objects.get(pk=event_id)
         obj= Group.objects.latest('id')
-        name = participant[0]
-        
-        group = Group.objects.create(event=event, team_id=obj.team_id+1, name=name)
+        try:
+            group_leader = UserProfile.objects.get(mi_number=participant[0])
+            group = Group.objects.create(event=event, team_id=obj.team_id+1, name=group_leader.mi_number)
+        except:
+            return Response({"details":"MI Number invalid"}, status = status.HTTP_400_BAD_REQUEST)
         
         for user in participant:
-            event.participants.add(UserProfile.objects.get(mi_number=user))
-            group.members.add(UserProfile.objects.get(mi_number=user))
+            try:
+                event.participants.add(UserProfile.objects.get(mi_number=user))
+                group.members.add(UserProfile.objects.get(mi_number=user))
+            except:
+                return Response({"details":"MI Number invalid"}, status = status.HTTP_400_BAD_REQUEST)
             event.groups_part.add(group)
         serializer = IndividualEventSerializer(event)
-        
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        group_serializer = GroupSerializer(group)
+        return Response({"details":"success", "default":group_serializer.data}, status=status.HTTP_201_CREATED)
     
     def get(self, request, event_id, format = None):
         serializer = IndividualEventSerializer(IndividualEvent.objects.get(pk = event_id))
