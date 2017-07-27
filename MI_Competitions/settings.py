@@ -26,7 +26,7 @@ SECRET_KEY = 'rn*b&v579*1fg%^ft+c-3zr-!%$4j)#o_hyhh564mxybaq$q9%'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'192.168.2.4',
+'192.168.2.10',
 '127.0.0.1',
 '192.168.0.8']
 
@@ -108,8 +108,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
+'''
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+'''
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
