@@ -7,6 +7,7 @@ from django.contrib import admin
 class UserProfileAdmin(admin.ModelAdmin):
     exclude = ("mi_number","fb_id")
     list_display = ('name', 'mobile_number','present_college','present_city')
+    search_fields = ['name']
 
 
 admin.site.register(City)
