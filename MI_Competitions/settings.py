@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'proshows.apps.ProshowsConfig',
     'workshops.apps.WorkshopsConfig',
     'pronites.apps.PronitesConfig',
+    'artsandideas.apps.ArtsAndIdeasConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
