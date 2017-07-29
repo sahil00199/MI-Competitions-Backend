@@ -4,19 +4,15 @@ from __future__ import unicode_literals
 from django.db import models
 
 class InformalsGenre(models.Model):
-    genre = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100)
     description = models.TextField()
 
     def __str__(self):
-        return self.genre
-
-class Informal(models.Model):
-    description = models.TextField()
-    genres = InformalsGenre.objects.all()
+        return self.name
 
 class InformalsEvent(models.Model):
     name = models.CharField(max_length = 100)
-    genre = models.ForeignKey(InformalsGenre, on_delete = models.CASCADE)
+    genre = models.ForeignKey(InformalsGenre, related_name='events', on_delete = models.CASCADE)
     description = models.TextField()
 
     def __str__(self):

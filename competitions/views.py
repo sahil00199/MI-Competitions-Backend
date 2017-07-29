@@ -1,11 +1,16 @@
 from django.shortcuts import render
-from .models import Group, Genre, GroupEvent, IndividualEvent, Competition
+from .models import Group, CompetitionsGenre, GroupEvent, IndividualEvent
 from participant_api.models import UserProfile
-from .serializers import IndividualEventSerializer, GroupSerializer, GroupEventSerializer, GenreSerializer
-from .serializers import GeneralInfoSerializer
+from .serializers import IndividualEventSerializer, GroupSerializer, GroupEventSerializer, CompetitionsGenreSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+class Competitions(APIView):
+    def get(self, request, format=None):
+        genres = CompetitionsGenre.objects.all()
+        serializer = CompetitionsGenreSerializer(genres, many = True)
+        return Response(serializer.data)
 
 class IndividualCompetition(APIView): #add participant to an individual competition and return info on individual competition
     def post(self, request, event_id, format = None):
@@ -42,7 +47,7 @@ class IndividualEventsForUser(APIView): #given fb_id, find all individual compet
             return Response(serializer.data)
         except:
             return Response({}, status = status.HTTP_400_BAD_REQUEST)
-
+'''
 class GroupCompetition(APIView): #add a group of participants to a group competition and return info on grp competition
     def post(self, request, event_id, format = None):
         participant_list = request.data['participants']
@@ -106,3 +111,4 @@ class AllEvents(APIView):
     def get(self, request, format=None):
         serializer = IndividualEventSerializer(IndividualEvent.objects.all(), many = True)
         return Response(serializer.data)
+'''

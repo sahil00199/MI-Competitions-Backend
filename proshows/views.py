@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .serializers import ProshowSerializer, ProshowsGenreSerializer,ProshowsEventSerializer
+from .serializers import ProshowsGenreSerializer,ProshowsEventSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import ProshowsGenre, Proshow, ProshowsEvent
+from .models import ProshowsGenre, ProshowsEvent
 
+class Proshows(APIView): #return all the genres under ProshowS and create a new genre
+    def get(self, request, format=None):
+        genres = ProshowsGenre.objects.all()
+        serializer = ProshowsGenreSerializer(genres, many = True)
+        return Response(serializer.data)
+
+'''
 class Proshow1(APIView): #return description of entire ProshowS
     def get(self, request, format=None):
         serializer = ProshowSerializer(Proshow.objects.get(pk=1))
@@ -49,4 +56,4 @@ class ProshowsEventAll(APIView):
     def get(self, request, format=None):
         serializer = ProshowsEventSerializer(ProshowsEvent.objects.all(), many=True)
         return Response(serializer.data)
-
+'''

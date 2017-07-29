@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .serializers import InformalSerializer, InformalsGenreSerializer,InformalsEventSerializer
+from .serializers import InformalsGenreSerializer,InformalsEventSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import InformalsGenre, Informal, InformalsEvent
+from .models import InformalsGenre, InformalsEvent
 
+class Informals(APIView): #return all the genres under INFORMALS and create a new genre
+    def get(self, request, format=None):
+        genres = InformalsGenre.objects.all()
+        serializer = InformalsGenreSerializer(genres, many = True)
+        return Response(serializer.data)
+
+'''
 class Informal1(APIView): #return description of entire INFORMALS
     def get(self, request, format=None):
         serializer = InformalSerializer(Informal.objects.get(pk=1))
@@ -49,3 +56,4 @@ class InformalsEventAll(APIView):
     def get(self, request, format=None):
         serializer = InformalsEventSerializer(InformalsEvent.objects.all(), many=True)
         return Response(serializer.data)
+'''

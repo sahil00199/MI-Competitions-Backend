@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .serializers import WorkshopSerializer, WorkshopsGenreSerializer,WorkshopsEventSerializer
+from .serializers import WorkshopsGenreSerializer,WorkshopsEventSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import WorkshopsGenre, Workshop, WorkshopsEvent
+from .models import WorkshopsGenre, WorkshopsEvent
 
+class Workshops(APIView): #return all the genres under WorkshopS and create a new genre
+    def get(self, request, format=None):
+        genres = WorkshopsGenre.objects.all()
+        serializer = WorkshopsGenreSerializer(genres, many = True)
+        return Response(serializer.data)
+'''
 class Workshop1(APIView): #return description of entire WorkshopS
     def get(self, request, format=None):
         serializer = WorkshopSerializer(Workshop.objects.get(pk=1))
@@ -44,3 +50,4 @@ class WorkshopsEvent1(APIView): #return info about a particular event
         event = WorkshopsEvent.objects.get(pk = event_id)
         serializer = WorkshopsEventSerializer(event)
         return Response(serializer.data)
+'''

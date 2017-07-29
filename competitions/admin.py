@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GroupEvent, IndividualEvent, Genre, Competition, Group
+from .models import GroupEvent, IndividualEvent, CompetitionsGenre, Group
 from participant_api.models import UserProfile
 from .forms import ImprovedModelForm
 from django.contrib.admin.widgets import ManyToManyRawIdWidget
@@ -32,8 +32,8 @@ class IndividualEventAdmin(admin.ModelAdmin):
     )  
 
 admin.site.register(GroupEvent)
+#admin.site.register(Competition)
+admin.site.register(CompetitionsGenre)
 admin.site.register(IndividualEvent,IndividualEventAdmin)
-admin.site.register(Genre)
-admin.site.register(Competition)
 admin.site.register(Group,GroupAdmin)
 

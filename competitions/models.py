@@ -1,16 +1,17 @@
 from django.db import models
 from participant_api.models import UserProfile
 #from __future__ import unicode_literals
-
+'''
 class Competition(models.Model):
     description = models.TextField()
+'''
 
-class Genre(models.Model):
-    genre = models.CharField(max_length = 100)
+class CompetitionsGenre(models.Model):
+    name = models.CharField(max_length = 100)
     description = models.TextField()
 
     def __str__(self):
-        return self.genre
+        return self.name
 
 class Group(models.Model):
     name= models.CharField(max_length = 100)
@@ -23,7 +24,7 @@ class Group(models.Model):
 
 class IndividualEvent(models.Model):
     name = models.CharField(max_length = 100)
-    genre = models.ForeignKey(Genre, on_delete= models.CASCADE)
+    genre = models.ForeignKey(CompetitionsGenre, related_name="events", on_delete= models.CASCADE)
     about = models.TextField()
     rules = models.TextField()
     prizes = models.TextField()
@@ -39,7 +40,7 @@ class IndividualEvent(models.Model):
 
 class GroupEvent(models.Model):
     name = models.CharField(max_length=100)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.ForeignKey(CompetitionsGenre, on_delete=models.CASCADE)
     about = models.TextField()
     rules = models.TextField()
     prizes = models.TextField()
