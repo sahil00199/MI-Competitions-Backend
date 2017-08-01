@@ -74,8 +74,10 @@ class CreateParticipant(APIView):
             end = "101"
         else:
             end = str(101+already_there)
+        type(request.data)
         #try:
         new_user = UserProfile.objects.create(name=request.data['name'], postal_address=request.data['postal_address'], mobile_number=request.data['mobile_number'], whatsapp_number=request.data['whatsapp_number'], zip_code=request.data['zip_code'], year_of_study=request.data['year_of_study'], fb_id=request.data['fb_id'], email=request.data['email'], present_city=city, present_college=college, mi_number=(beg+"-"+end))
+        return Response("details":"Successful!", status=status.HTTP_201_CREATED)
         #except:
         '''    #return Response({"details":"Invalid"}, status = status.HTTP_400_BAD_REQUEST)
         serializer = UserSerializer(data=request.data)
