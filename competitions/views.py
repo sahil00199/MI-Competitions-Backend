@@ -1,10 +1,14 @@
 from django.shortcuts import render
-from .models import Group, CompetitionsGenre, GroupEvent, IndividualEvent
+from django.views.generic import TemplateView
+from .models import Group, CompetitionsGenre, GroupEvent, IndividualEvent, GroupRelationship
 from participant_api.models import UserProfile
 from .serializers import IndividualEventSerializer, GroupSerializer, GroupEventSerializer, CompetitionsGenreSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 
 class Competitions(APIView):
     def get(self, request, format=None):
@@ -30,6 +34,7 @@ class IndividualCompetition(APIView): #add participant to an individual competit
             except:
                 return Response({"details":"MI Number invalid"}, status = status.HTTP_400_BAD_REQUEST)
             event.groups_part.add(group)
+        grp = GroupRelationship.objects.create(group=group, event=event, contact=group_leader.mobile_number, city=group_leader.present_city)
         serializer = IndividualEventSerializer(event)
         group_serializer = GroupSerializer(group)
         return Response({"details":"success", "default":group_serializer.data}, status=status.HTTP_201_CREATED)
@@ -47,6 +52,15 @@ class IndividualEventsForUser(APIView): #given fb_id, find all individual compet
             return Response(serializer.data)
         except:
             return Response({}, status = status.HTTP_400_BAD_REQUEST)
+
+class ProtectedView(TemplateView):
+    #template_name = 'secret.html'
+
+    @method_decorator(login_required(login_url='/admin/login/'))
+    def dispatch(self, *args, **kwargs):
+        return super(ProtectedView, self).dispatch(*args, **kwargs)
+
+
 '''
 class GroupCompetition(APIView): #add a group of participants to a group competition and return info on grp competition
     def post(self, request, event_id, format = None):

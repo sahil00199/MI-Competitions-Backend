@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.views.generic import TemplateView
+
 from . import views
 
 urlpatterns=[
@@ -11,6 +13,9 @@ urlpatterns=[
     #having mi number as string)
 
     url(r'^individual/user/(?P<fb_id>[0-9]+)/$', views.IndividualEventsForUser.as_view()),
+
+    url(r'^admin/preferences/$', views.ProtectedView.as_view(template_name='admin/competitions/preferences.html')),
+
     #return all individual events for user with given mi number registered for
 
     #url(r'^group/competition/(?P<event_id>[0-9]+)/$', views.GroupCompetition.as_view()),
